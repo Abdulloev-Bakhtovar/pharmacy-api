@@ -12,7 +12,7 @@ FROM eclipse-temurin:21-jdk-jammy
 
 WORKDIR /app
 
-COPY --from=builder /app/target/eureka-server-0.0.1-SNAPSHOT.jar ./eureka-server.jar
+COPY --from=builder /app/target/*.jar ./eureka-server.jar
 
 EXPOSE 8761
 

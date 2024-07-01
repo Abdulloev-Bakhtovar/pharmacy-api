@@ -1,0 +1,69 @@
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME:pharmacy-service}
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/pharmacy_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog_master.yml
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:redis}
+      port: ${SPRING_REDIS_PORT:6379}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SPRING_OAUTH2_ISSUER_URI:http://pharmacy-keycloak:8080/realms/pharmacy-realm}
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${SPRING_OAUTH2_ISSUER_URI:http://pharmacy-keycloak:8080/realms/pharmacy-realm}
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: ${SPRING_KEYCLOAK_CLIENT_ID:pharmacy-client}
+            client-secret: ${SPRING_KEYCLOAK_CLIENT_SECRET:SOeEqmzR8dptEBYi2sLqDGScf5HK5gzq}
+            scope:
+              - email
+              - profile
+              - openid
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://eureka-server:8761/eureka/}
+  instance:
+    prefer-ip-address: ${EUREKA_INSTANCE_PREFER_IP_ADDRESS:true}
+
+server:
+  port: "${SERVER_PORT:8081}"

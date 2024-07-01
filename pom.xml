@@ -43,5 +43,6 @@
     <modules>
         <module>eureka-server</module>
         <module>report-service</module>
+        <module>pharmacy-service</module>
     </modules>
 </project>
