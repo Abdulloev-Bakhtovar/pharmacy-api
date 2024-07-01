@@ -1,0 +1,42 @@
+version: '3.8'
+
+networks:
+  pharmacy_network:
+    external: true
+
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: report-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: report_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    hostname: report-postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - pharmacy_network
+
+  report-service:
+    container_name: report-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_APPLICATION_NAME: report-service
+      SPRING_DATASOURCE_URL: jdbc:postgresql://report-postgres:5432/report_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      SERVER_PORT: 8090
+    hostname: report-service
+    ports:
+      - "8090:8090"
+    depends_on:
+      - postgres
+    networks:
+      - pharmacy_network
