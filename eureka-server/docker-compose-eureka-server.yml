@@ -1,0 +1,23 @@
+version: '3.8'
+
+networks:
+  pharmacy_network:
+    external: true
+
+services:
+  eureka-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    environment:
+      - SPRING_APPLICATION_NAME=eureka-server
+      - SERVER_PORT=8761
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+      - EUREKA_INSTANCE_HOSTNAME=eureka-server
+    ports:
+      - "8761:8761"
+    hostname: eureka-server
+    networks:
+      - pharmacy_network
