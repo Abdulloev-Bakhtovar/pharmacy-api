@@ -44,7 +44,7 @@ services:
       SPRING_OAUTH2_ISSUER_URI: http://pharmacy-keycloak:8080/realms/pharmacy-realm
       SPRING_KEYCLOAK_CLIENT_ID: pharmacy-client
       SPRING_KEYCLOAK_CLIENT_SECRET: SOeEqmzR8dptEBYi2sLqDGScf5HK5gzq
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
       SERVER_PORT: 8081
     hostname: pharmacy-service
