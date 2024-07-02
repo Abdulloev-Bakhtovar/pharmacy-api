@@ -2,16 +2,15 @@ package ru.bakht.pharmacy.service.service.report;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakht.pharmacy.service.mapper.MedicationMapper;
 import ru.bakht.pharmacy.service.mapper.OrderMapper;
-import ru.bakht.pharmacy.service.model.dto.MedicationDto;
-import ru.bakht.pharmacy.service.model.dto.OrderDto;
-import ru.bakht.pharmacy.service.model.dto.TotalOrders;
-import ru.bakht.pharmacy.service.model.dto.TotalOrdersProjection;
+import ru.bakht.pharmacy.service.model.dto.*;
 import ru.bakht.pharmacy.service.repository.MedicationRepository;
 import ru.bakht.pharmacy.service.repository.OrderRepository;
+import ru.bakht.pharmacy.service.service.PharmacyService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +29,7 @@ public class ReportService {
     private final OrderRepository orderRepository;
     private final MedicationMapper medicationMapper;
     private final OrderMapper orderMapper;
+    private final PharmacyService pharmacyService;
 
     /**
      * Получает список медикаментов, доступных в конкретной аптеке.
@@ -37,8 +37,11 @@ public class ReportService {
      * @param pharmacyId ID аптеки
      * @return список {@link MedicationDto}, представляющих медикаменты, доступные в аптеке
      */
+    @Cacheable(value = "pharmacy_medications", key = "#pharmacyId")
     public List<MedicationDto> getMedicationsByPharmacy(Long pharmacyId) {
         log.info("Получен запрос на получение лекарств для аптеки с id {}", pharmacyId);
+
+        pharmacyService.getById(pharmacyId);
 
         return mapToDto(
                 medicationRepository.findMedicationsByPharmacyId(pharmacyId), medicationMapper::toDto);
@@ -80,6 +83,8 @@ public class ReportService {
      */
     public List<MedicationDto> getOutOfStockMedicationsByPharmacy(Long pharmacyId) {
         log.info("Получен запрос на получение отсутствующих лекарств для аптеки с id {}", pharmacyId);
+
+        pharmacyService.getById(pharmacyId);
 
         return mapToDto(medicationRepository.findOutOfStockMedicationsByPharmacyId(pharmacyId),
                 medicationMapper::toDto);

@@ -22,6 +22,7 @@
         <redis.version>6.3.0</redis.version>
         <springdoc.version>2.5.0</springdoc.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
+        <jackson.version>2.17.1</jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -132,6 +133,16 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

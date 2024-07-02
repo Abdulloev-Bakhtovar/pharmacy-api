@@ -9,7 +9,6 @@ services:
   postgres:
     image: postgres:16
     container_name: report-postgres
-    restart: always
     environment:
       POSTGRES_DB: report_db
       POSTGRES_USER: postgres
