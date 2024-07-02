@@ -5,12 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PharmacyMedicationDto {
+public class PharmacyMedicationDto implements Serializable {
 
     @NotNull(message = "Аптека обязательна")
     PharmacyDto pharmacyDto;

@@ -3,6 +3,7 @@ package ru.bakht.pharmacy.service.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,6 +77,7 @@ public class MedicationService implements BaseService<MedicationDto, Long> {
      * {@inheritDoc}
      */
     @Override
+    @CacheEvict(value = "pharmacy_medications", key = "#id")
     public MedicationDto update(Long id, MedicationDto medicationDto) {
         log.info("Обновление лекарства: {}", medicationDto);
         var existingMedication = medicationRepository.findById(id)
@@ -92,6 +94,7 @@ public class MedicationService implements BaseService<MedicationDto, Long> {
      * {@inheritDoc}
      */
     @Override
+    @CacheEvict(value = "pharmacy_medications", key = "#id")
     public void delete(Long id) {
         log.info("Удаление лекарства с идентификатором {}", id);
         medicationRepository.deleteById(id);

@@ -11,6 +11,7 @@
     <groupId>ru.bakht</groupId>
     <artifactId>pharmacy-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging> <!-- Установлено значение 'pom' -->
     <name>pharmacy-api</name>
     <description>pharmacy-api</description>
 
